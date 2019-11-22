@@ -2,31 +2,12 @@ require_relative 'lib/product'
 require_relative 'lib/movie'
 require_relative 'lib/book'
 
+# Путь до папки с программой
+current_path = File.dirname(__FILE__ )
 
-film = Movie.new(
-    title: 'Леон',
-    producer: 'Люк Бессон',
-    price: 990,
-    amount: 5
-)
+# Путь до файла + вызов метода
+film = Movie.from_file(current_path + '/data/movie/01.txt')
+book = Book.from_file(current_path + '/data/book/01.txt')
 
-# Дата фильма
-film.year = 1994
-
-film.update(amount: 5)
-
-
-kniga = Book.new(
-    title: 'Идиот',
-    genre: 'роман',
-    amount: 10
-)
-
-# Автор книги
-kniga.author = "Федька Достоевский"
-
-# Изменение информации о книге
-kniga.update(author: "Федор Достоевский", price: 1500)
-
-puts kniga
-puts film
+puts book.to_s
+puts film.to_s

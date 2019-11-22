@@ -24,6 +24,20 @@ class Movie < Product
     @year = params[:year] if params[:year]
     @producer = params[:producer] if params[:producer]
   end
+
+  def self.from_file(file_name)
+   lines = File.readlines(file_name, encoding: "UTF-8").map { |l| l.chomp  }
+
+   self.new(
+       title: lines[0],
+       producer: lines[1],
+       year: lines[2].to_i,
+       price: lines[3].to_i,
+       amount: lines[4].to_i
+   )
+
+  end
+
   # Преобразование данных в строку
   def to_s
       return "Фильм \"#{@title}\", #{@year}, реж. #{@producer}, #{@price}, (#{@amount})"

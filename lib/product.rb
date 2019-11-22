@@ -16,4 +16,11 @@ class Product
     @amount = params[:amount] if params[:amount]
   end
 
+  # Считываение данных из файла
+  def self.from_file(file_name)
+    # raise - вызывает RuntimeError, который в свою очередь выведет текст "NotImplementedError"
+    # в качестве ошибки
+   raise NotImplementedError
+  end
+
 end
