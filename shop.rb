@@ -1,13 +1,33 @@
+# encoding: utf-8
+#
+# (с) goodprogrammer.ru
+#
+# Этот код необходим только при использовании русских букв на Windows
+if Gem.win_platform?
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
+end
+
 require_relative 'lib/product'
-require_relative 'lib/movie'
 require_relative 'lib/book'
+require_relative 'lib/film'
+require_relative 'lib/product_collection'
 
-# Путь до папки с программой
-current_path = File.dirname(__FILE__ )
+# Создаем коллекцию продуктов, передавая методу класса from_dir путь к папке
+# с подпапками films и books. ProductCollection сам знает, как там внутри лежат
+# эти файлы и сам разбереться, как их оттуда считать.
+collection = ProductCollection.from_dir(File.dirname(__FILE__) + '/data')
 
-# Путь до файла + вызов метода
-film = Movie.from_file(current_path + '/data/movie/01.txt')
-book = Book.from_file(current_path + '/data/book/01.txt')
+# Сортируем продукты по возрастанию цены с помощью метода sort! экземпляра
+# класса ProductCollection
+collection.sort!(by: :price, order: :asc)
 
-puts book.to_s
-puts film.to_s
+# Получаем массив продуктов методом to_a и выводим каждый на экран, передавая
+# его методу puts в качестве аргумента.
+collection.to_a.each do |product|
+  puts product
+end

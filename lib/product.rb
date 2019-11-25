@@ -1,26 +1,30 @@
-# Родительский класс
+# encoding: utf-8
+#
+# Класс-родитель Товар
 class Product
+  attr_accessor :price, :amount
 
-  # attr_accessor - позволяет как считывать так и записывать параметры :price и :amount
-  attr_accessor  :price, :amount
-
-  # записываем цену товара и его кол-во
+  # Конструктор
   def initialize(params)
     @price = params[:price]
     @amount = params[:amount]
   end
 
-  # Обновление информации
+  # Вывод параметров на экран
+  def to_s
+    "#{@price} руб. (осталось #{@amount})"
+  end
+
+  # Изменение параметров
   def update(params)
     @price = params[:price] if params[:price]
     @amount = params[:amount] if params[:amount]
   end
 
-  # Считываение данных из файла
-  def self.from_file(file_name)
-    # raise - вызывает RuntimeError, который в свою очередь выведет текст "NotImplementedError"
-    # в качестве ошибки
-   raise NotImplementedError
+  # Абстрактный метод
+  # raise - выведет сообщение об ошибке
+  # (в нашем случае - NotImplementedError)
+  def self.from_file(file_path)
+    raise NotImplementedError
   end
-
 end
