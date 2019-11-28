@@ -5,7 +5,7 @@ class ProductCollection
   # Ассоциативный массив, где ключем является символ, а значением — другой ассоцаитивный
   # массив с название папки (где лежат файлы этого типа) и ссылкой на класс.
   PRODUCT_TYPES = {
-      film: {dir: 'films', class: Film},
+      film: {dir: 'films', class: Movie},
       book: {dir: 'books', class: Book}
   }
 
@@ -25,7 +25,7 @@ class ProductCollection
     # Пройдемся по каждой паре ключ-значение из константы PRODUCT_TYPES и
     # поочередно запишем эту пару соответственно в переменные type и hash.
     #
-    # Сначала в type будет :film, а в hash — {dir: 'films', class: Film}, потом
+    # Сначала в type будет :film, а в hash — {dir: 'films', class: Movie}, потом
     # в type будет :books, а в hash — {dir: 'books', class: Book}
     #
     PRODUCT_TYPES.each do |type, hash|

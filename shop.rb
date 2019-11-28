@@ -12,22 +12,44 @@ if Gem.win_platform?
   end
 end
 
+require 'rexml/document'
+
 require_relative 'lib/product'
 require_relative 'lib/book'
-require_relative 'lib/film'
+require_relative 'lib/movie'
+require_relative 'lib/disc'
 require_relative 'lib/product_collection'
 
-# Создаем коллекцию продуктов, передавая методу класса from_dir путь к папке
-# с подпапками films и books. ProductCollection сам знает, как там внутри лежат
-# эти файлы и сам разбереться, как их оттуда считать.
-collection = ProductCollection.from_dir(File.dirname(__FILE__) + '/data')
 
-# Сортируем продукты по возрастанию цены с помощью метода sort! экземпляра
-# класса ProductCollection
-collection.sort!(by: :price, order: :asc)
+# Че за переменная ???
+total_price = 0
 
-# Получаем массив продуктов методом to_a и выводим каждый на экран, передавая
-# его методу puts в качестве аргумента.
-collection.to_a.each do |product|
-  puts product
+# .read_from_xml - что длеает метод ????
+products = Product.read_from_xml('data/products.xml')
+
+# Хранит ответ пользователя
+choice = nil
+
+# Пока пользователь не ввел x
+while choice != 'x'
+
+  #todo
+  Product.showcase(products)
+
+  # Ввод от пользователя
+  choice = STDIN.gets.chomp
+
+  # Проверка корректности введенных данных
+  if choice != 'x' && choice.to_i < products.size && choice.to_i >= 0
+
+    # Записываем выбранный продукт
+    product = products[choice.to_i]
+
+    # Суммируем цены выбранных продуктов
+    # .buy todo
+    total_price += product.buy
+  end
 end
+
+# Вывод итога
+puts "Спасибо за покупку! С Вас #{total_price} руб."
