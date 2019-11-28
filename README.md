@@ -1,2 +1,1 @@
-Магазин в котором есть родительский(хранящий в себе цены и кол-во товара)
-и 2 дочерних класса (хранящих в себе параметры товаров) 
+The program displays the goods from the XML file and offers the user to select and purchase any goods.
