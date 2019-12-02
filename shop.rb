@@ -20,11 +20,12 @@ require_relative 'lib/movie'
 require_relative 'lib/disc'
 require_relative 'lib/product_collection'
 
+puts "Какой товар вы хотите добавить ?"
 
-# Че за переменная ???
+#  Создаем итоговую сумму
 total_price = 0
 
-# .read_from_xml - что длеает метод ????
+# .read_from_xml - чтение из xml
 products = Product.read_from_xml('data/products.xml')
 
 # Хранит ответ пользователя
@@ -33,7 +34,7 @@ choice = nil
 # Пока пользователь не ввел x
 while choice != 'x'
 
-  #todo
+  # Вывод списка товаров
   Product.showcase(products)
 
   # Ввод от пользователя

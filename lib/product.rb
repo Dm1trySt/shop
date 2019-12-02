@@ -25,6 +25,7 @@ class Product
     "#{info} - #{@price} руб. [осталось: #{@amount_available}]"
   end
 
+
   # Вывод списка товаров
   def self.showcase(products)
     puts "Что вы хотите купить? \n\n"
@@ -56,6 +57,11 @@ class Product
   def self.read_from_xml(file_name)
     # Путь до файла
     file_path = File.dirname(__FILE__ ) + "/" + file_name
+
+    # Запиьс в XML файл
+    def write_from_xml(path)
+      #todo
+    end
 
     # Файл не найден
     unless File.exist?(file_path)
@@ -107,7 +113,7 @@ class Product
       # Тег disc
       content.elements.each_entry("disk") do |disk_content|
         # Внутри тега book мы можем прочитать его аттрибуты
-        product = Disk.new(price,amount_available)
+        product = Disc.new(price, amount_available)
         product.update(
             album_name: disk_content.attributes["album_name"],
             artist_name: disk_content.attributes["artist_name"],
@@ -122,5 +128,57 @@ class Product
     # Вернем результат
     return result
 
+  end
+
+  #======== методы для создания новых продуктов ===========
+
+  # Типы продуктов.
+  # Возвращает список детей родительского класса
+  def self.product_types
+    [Book,Movie,Disc]
+  end
+
+  # Абстрактный метод будет помогать каждому ребёнку
+  # заполнять его поля из консоли
+  def read_from_console
+  end
+
+  # Создание нового тега с аттрибутами
+  def to_xml
+    res = REXML::Element.new('product')
+    res.attributes['price'] = @price
+    res.attributes['amount_available'] = @amount_available
+    return res
+  end
+
+
+  # Запись продуктов в xml файл
+  def save_to_xml(file_name)
+    file_path = File.dirname(__FILE__) + '/' + file_name
+
+    unless  File.exist?(file_path)
+      abort "Файл \"#{file_path}\" не найден!"
+    end
+
+    # Открываем файл
+    file = File.new(file_path, 'r:UTF-8')
+
+    # Читаем текущий список товаров
+    doc = REXML::Document.new(file)
+
+    # закрываем файл
+    file.close
+    
+    # Открываем файл
+    file = File.new(file_path, "w:UTF-8")
+
+    # Добавляем элементы из метода to_xml в doc
+    doc.root.add_element(self.to_xml)
+
+    # Запись в файл
+    doc.write(file, 2)
+
+    # Закрываем файл
+    file.close
   end
 end
