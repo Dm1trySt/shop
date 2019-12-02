@@ -36,7 +36,7 @@ class Disc < Product
     # Добовляем переменные класса фильм
     product.add_element('disk', {
         'album_name' => @album_name,
-        '@artist_name' => @artist_name,
+        'artist_name' => @artist_name,
         'genre' => @genre
     })
 
